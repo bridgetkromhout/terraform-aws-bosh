@@ -23,16 +23,25 @@ Deploy
 
 ### Prerequisites
 
-The one step that isn't automated is the creation of SSH keys. We are waiting for that feature to be [added to terraform](https://github.com/hashicorp/terraform/issues/28). An AWS SSH Key need to be created in desired region prior to running the following commands. Note the name of the key and the path to the pem/private key file for use further down.
 
-You **must** being using at least terraform version 0.3.6. Follow the `make dev` [build instructions](https://github.com/hashicorp/terraform/#developing-terraform) to ensure plugins are built too.
+1) [Install Terraform](https://www.terraform.io/downloads.html). Terraform 0.6.15 will work with no additional plugins.
 
-```
-$ terraform -v
-Terraform v0.3.6.dev
-```
 
-Optionally for using the `Unattended Install` instruction, install git.
+        $ terraform -v
+        Terraform v0.6.15
+
+Note:
+If you cannot upgrade to 06.15, the oldest known-good terraform version you can use is 0.3.6 with dev plugins. Use `make dev` [build instructions](https://github.com/hashicorp/terraform/#developing-terraform) to ensure plugins are available.
+
+
+        $ terraform -v
+        Terraform v0.3.6.dev
+
+2) Have your AWS access key, secret key, and private key available.
+
+The one step that isn't automated is the creation of SSH keys. We are waiting for that feature to be [added to terraform](https://github.com/hashicorp/terraform/issues/28). An AWS SSH Key needs to be created in the desired region prior to running the following commands. Note the name of the key and the path to the pem/private key file for use further down.
+
+3) Install git
 
 ### Setup
 
@@ -98,10 +107,8 @@ Director
 
 ### Cleanup / Tear down
 
-Terraform does not yet quite cleanup after itself.
+First, run `make destroy`.
 
-First, using the AWS Console you must manually delete all Instances (VMs).
-
-Second, run `make destroy`.
+Terraform does not always quite clean up after itself. You may have to delete some security groups, instances, etc manually, then rerun `make destroy`.
 
 Finally, run `make clean`.
